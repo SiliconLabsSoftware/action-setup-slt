@@ -36,3 +36,8 @@ jobs:
         id: check-outputs
         run: |
           echo "SLT version installed: ${{ steps.test-action.outputs.slt-version }}"
+          echo "SLT executable path : ${{ steps.test-action.outputs.slt-path }}"
+          echo "conan_engine version installed: ${{ steps.test-action.outputs.conan-engine-version }}"
+          echo "conan_engine executable path: ${{ steps.test-action.outputs.conan-engine-path }}"
+          echo "conan version installed: ${{ steps.test-action.outputs.conan-version }}"
+          echo "conan executable path: ${{ steps.test-action.outputs.conan-path }}"

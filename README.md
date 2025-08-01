@@ -11,16 +11,20 @@ This GitHub Action downloads and install SLT, conan_engine and conan
 
 ## Inputs
 
-| Input                              | Description                                            | Required                 |
-| ---------------------------------- | ------------------------------------------------------ | ------------------------ |
-| `install-conan`                    | Install conan alongside slt                            | No (default: true)       |
-
+| Input           | Description                 | Required           |
+| --------------- | --------------------------- | ------------------ |
+| `install-conan` | Install conan alongside slt | No (default: true) |
 
 ## Outputs
 
-| Output            | Description                  |
-| ----------------- | ---------------------------- |
-| `slt-version`     | The slt version installed    |
+| Output                 | Description                        |
+| ---------------------- | ---------------------------------- |
+| `slt-version`          | The slt version installed          |
+| `slt-path`             | The slt executable path            |
+| `conan-engine-version` | The conan_engine version installed |
+| `conan-engine-path`    | The conan_engine executable path   |
+| `conan-version`        | The conan version installed        |
+| `conan-path`           | The conan executable path          |
 
 ## Usage
 
@@ -35,6 +39,11 @@ steps:
   - name: Check SLT version
     run: |
       echo "SLT version installed: ${{ steps.test-action.outputs.slt-version }}"
+      echo "SLT executable path : ${{ steps.test-action.outputs.slt-path }}"
+      echo "conan_engine version installed: ${{ steps.test-action.outputs.conan-engine-version }}"
+      echo "conan_engine executable path: ${{ steps.test-action.outputs.conan-engine-path }}"
+      echo "conan version installed: ${{ steps.test-action.outputs.conan-version }}"
+      echo "conan executable path: ${{ steps.test-action.outputs.conan-path }}"
 ```
 
 ## Development

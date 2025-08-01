@@ -18,8 +18,23 @@ inputs:
 
 outputs:
   slt-version:
-    description: The SLT version downloaded
-    value: ${{ steps.check-slt-version.outputs.slt-version }}
+    description: The SLT version installed
+    value: ${{ steps.check-slt.outputs.slt-version }}
+  slt-path:
+    description: The path to the SLT executable
+    value: ${{ steps.check-slt.outputs.slt-path }}
+  conan-engine-version:
+    description: The conan_engine version installed
+    value: ${{ steps.install-conan.outputs.conan-engine-version }}
+  conan-engine-path:
+    description: The path to the conan_engine executable
+    value: ${{ steps.install-conan.outputs.conan-engine-path }}
+  conan-version:
+    description: The conan version installed
+    value: ${{ steps.install-conan.outputs.conan-version }}
+  conan-path:
+    description: The path to the conan executable
+    value: ${{ steps.install-conan.outputs.conan-path }}
 
 runs:
   using: 'composite'
@@ -44,10 +59,11 @@ runs:
         SLT_PKG_NAME: slt-cli_linux_amd64.zip
         SLT_PKG_VERSION: 0.0.8-218
     
-    - name: Check slt version
-      id: check-slt-version
+    - name: Check slt version and output slt path
+      id: check-slt
       run: |
         echo "slt-version=$(slt --version)" >> $GITHUB_OUTPUT
+        echo "slt-path=$(which slt)" >> $GITHUB_OUTPUT
       shell: bash
     
     - name: install conan_engine and conan, also export CONAN_HOME in env
@@ -56,8 +72,10 @@ runs:
       run: |
         slt install foo --engine conan || true
         ln -s $HOME/.silabs/slt/engines/conan/conan_engine $HOME/.local/bin/conan_engine
+        echo "conan-engine-version=$(conan_engine --version)" >> $GITHUB_OUTPUT
+        echo "conan-engine-path=$(which conan_engine)" >> $GITHUB_OUTPUT
         ln -s $HOME/.silabs/slt/engines/conan/conan/conan $HOME/.local/bin/conan
-        conan_engine --version
-        conan --version
-        echo "CONAN_HOME=$HOME/.silabs/slt/installs/conan" >> $GITHUB_ENV 
+        echo "conan-version=$(conan --version)" >> $GITHUB_OUTPUT
+        echo "conan-path=$(which conan)" >> $GITHUB_OUTPUT
+        echo "CONAN_HOME=$HOME/.silabs/slt/installs/conan" >> $GITHUB_ENV
       shell: bash
