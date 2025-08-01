@@ -1,0 +1,38 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Action
+    runs-on: [self-hosted, linux, x64, silabs-internal]
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      # see: https://github.com/actions/checkout/issues/1048
+      - name: Fix dubious ownership in repository
+        run: |
+          git config --global --add safe.directory $(pwd)
+
+      - name: Test Local Action
+        id: test-action
+        uses: ./          
+
+      - name: Check outputs
+        id: check-outputs
+        run: |
+          echo "SLT version installed: ${{ steps.test-action.outputs.slt-version }}"
