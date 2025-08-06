@@ -13,9 +13,12 @@ permissions:
 
 jobs:
   validate:
-    name: Validate Action
-    runs-on: [self-hosted, linux, x64, silabs-internal]
-
+    strategy:
+      fail-fast: false # otherwise a failing job cancels all other jobs.
+      matrix:
+        region: ['austin', 'boston', 'budapest', 'hyderabad', 'montreal']
+    name: Validate Action (${{ matrix.region }})
+    runs-on: [self-hosted, linux, x64, "${{ matrix.region }}" ]
     steps:
       - name: Checkout
         id: checkout
