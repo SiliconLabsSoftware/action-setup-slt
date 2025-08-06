@@ -71,10 +71,27 @@ runs:
       id: install-conan
       run: |
         slt install foo --engine conan || true
-        ln -s $HOME/.silabs/slt/engines/conan/conan_engine $HOME/.local/bin/conan_engine
+        
+        # Define paths as variables
+        CONAN_ENGINE_PATH="$HOME/.silabs/slt/engines/conan/conan_engine"
+        CONAN_PATH="$HOME/.silabs/slt/engines/conan/conan/conan"
+        INSTALL_PATH="$HOME/.local/bin"
+        
+        if [ -f "$CONAN_ENGINE_PATH" ]; then
+          ln -s "$CONAN_ENGINE_PATH" "$INSTALL_PATH/conan_engine"
+        else
+          echo "Error: conan_engine not found at $CONAN_ENGINE_PATH"
+          exit 1
+        fi
         echo "conan-engine-version=$(conan_engine --version)" >> $GITHUB_OUTPUT
         echo "conan-engine-path=$(which conan_engine)" >> $GITHUB_OUTPUT
-        ln -s $HOME/.silabs/slt/engines/conan/conan/conan $HOME/.local/bin/conan
+        
+        if [ -f "$CONAN_PATH" ]; then
+          ln -s "$CONAN_PATH" "$INSTALL_PATH/conan"
+        else
+          echo "Error: conan not found at $CONAN_PATH"
+          exit 1
+        fi
         echo "conan-version=$(conan --version)" >> $GITHUB_OUTPUT
         echo "conan-path=$(which conan)" >> $GITHUB_OUTPUT
         echo "CONAN_HOME=$HOME/.silabs/slt/installs/conan" >> $GITHUB_ENV
