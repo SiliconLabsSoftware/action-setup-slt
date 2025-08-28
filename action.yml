@@ -48,16 +48,15 @@ runs:
     - name: Download slt from artifactory
       id: download-slt
       run: |
-        curl ${SLT_ARTIFACTORY_URL}/${SLT_PKG_VERSION}/${SLT_PKG_NAME} --output /tmp/${SLT_PKG_NAME}
+        curl ${SLT_ARTIFACTORY_URL}/${SLT_PKG_NAME} --output /tmp/${SLT_PKG_NAME}
         mkdir -p $HOME/.local/bin
         unzip /tmp/${SLT_PKG_NAME} -d $HOME/.local/bin
         rm /tmp/${SLT_PKG_NAME}
         echo "$HOME/.local/bin" >> $GITHUB_PATH
       shell: bash
       env:
-        SLT_ARTIFACTORY_URL: https://artifactory-local.silabs.net/artifactory/studio-generic-development/slt/master
+        SLT_ARTIFACTORY_URL: https://artifactory-local.silabs.net/artifactory/studio-generic-development/v6/update-sites/daily/tools/slt
         SLT_PKG_NAME: slt-cli_linux_amd64.zip
-        SLT_PKG_VERSION: 0.0.8-218
     
     - name: Check slt version and output slt path
       id: check-slt
