@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false # otherwise a failing job cancels all other jobs.
       matrix:
-        region: ['austin', 'boston', 'budapest', 'hyderabad', 'montreal']
+        region: ['austin', 'budapest', 'hyderabad', 'montreal']
     name: Validate Action (${{ matrix.region }})
     runs-on: [self-hosted, linux, x64, "${{ matrix.region }}" ]
     steps:
