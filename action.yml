@@ -58,6 +58,7 @@ runs:
         unzip /tmp/${SLT_PKG_NAME} -d $HOME/.local/bin
         rm /tmp/${SLT_PKG_NAME}
         echo "$HOME/.local/bin" >> $GITHUB_PATH
+        echo "SLT_CI=true" >> $GITHUB_ENV
       shell: bash
       env:
         SLT_ARTIFACTORY_URL: ${{ inputs.use-unstable == 'true' && 'https://artifactory-local.silabs.net/artifactory/studio-generic-development/v6/update-sites/unstable/tools/slt/' || 'https://artifactory-local.silabs.net/artifactory/studio-generic-development/v6/update-sites/daily/tools/slt' }}
