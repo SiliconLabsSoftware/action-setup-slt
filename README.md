@@ -11,9 +11,10 @@ This GitHub Action downloads and install SLT, conan_engine and conan
 
 ## Inputs
 
-| Input           | Description                 | Required           |
-| --------------- | --------------------------- | ------------------ |
-| `install-conan` | Install conan alongside slt | No (default: true) |
+| Input           | Description                                                            | Required            |
+| --------------- | ---------------------------------------------------------------------- | ------------------- |
+| `install-conan` | Install conan alongside slt                                            | No (default: true)  |
+| `use-unstable`  | If true, download SLT from the unstable channel instead of daily build | No (default: false) |
 
 ## Outputs
 
@@ -32,19 +33,39 @@ This GitHub Action downloads and install SLT, conan_engine and conan
 steps:
   - uses: actions/checkout@v4
 
-  - name: Setup SLT
-    id: test-action
+  - name: Setup SLT (daily channel)
+    id: slt-daily
     uses: SiliconLabsInternal/action-setup-slt@main
+    with:
+      install-conan: true          # optional (default true)
+      use-unstable: false          # default, can be omitted
 
-  - name: Check SLT version
+  - name: Setup SLT (unstable channel)
+    id: slt-unstable
+    if: ${{ always() }} # example of calling again with a different channel
+    uses: SiliconLabsInternal/action-setup-slt@main
+    with:
+      use-unstable: true
+      install-conan: true
+
+  - name: Check SLT version (unstable)
     run: |
-      echo "SLT version installed: ${{ steps.test-action.outputs.slt-version }}"
-      echo "SLT executable path : ${{ steps.test-action.outputs.slt-path }}"
-      echo "conan_engine version installed: ${{ steps.test-action.outputs.conan-engine-version }}"
-      echo "conan_engine executable path: ${{ steps.test-action.outputs.conan-engine-path }}"
-      echo "conan version installed: ${{ steps.test-action.outputs.conan-version }}"
-      echo "conan executable path: ${{ steps.test-action.outputs.conan-path }}"
+      echo "(unstable) SLT version: ${{ steps.slt-unstable.outputs.slt-version }}"
+      echo "(unstable) SLT path    : ${{ steps.slt-unstable.outputs.slt-path }}"
+      echo "conan_engine version  : ${{ steps.slt-unstable.outputs.conan-engine-version }}"
+      echo "conan_engine path     : ${{ steps.slt-unstable.outputs.conan-engine-path }}"
+      echo "conan version         : ${{ steps.slt-unstable.outputs.conan-version }}"
+      echo "conan path            : ${{ steps.slt-unstable.outputs.conan-path }}"
 ```
+
+### Channels
+
+The action selects between two SLT artifact channels:
+
+* Daily (default): `studio-generic-development/v6/update-sites/daily/tools/slt`
+* Unstable (experimental): `studio-generic-development/v6/update-sites/unstable/tools/slt`
+
+Set `use-unstable: true` to target the unstable channel when you need the very latest changes that have not yet stabilized. Leave it `false` (or omit) for routine CI.
 
 ## Development
 

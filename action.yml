@@ -15,6 +15,11 @@ inputs:
     type: boolean
     required: false
     default: true
+  use-unstable:
+    description: Use unstable SLT remote
+    type: boolean
+    required: false
+    default: false
 
 outputs:
   slt-version:
@@ -55,7 +60,7 @@ runs:
         echo "$HOME/.local/bin" >> $GITHUB_PATH
       shell: bash
       env:
-        SLT_ARTIFACTORY_URL: https://artifactory-local.silabs.net/artifactory/studio-generic-development/v6/update-sites/daily/tools/slt
+        SLT_ARTIFACTORY_URL: ${{ inputs.use-unstable == 'true' && 'https://artifactory-local.silabs.net/artifactory/studio-generic-development/v6/update-sites/unstable/tools/slt/' || 'https://artifactory-local.silabs.net/artifactory/studio-generic-development/v6/update-sites/daily/tools/slt' }}
         SLT_PKG_NAME: slt-cli_linux_amd64.zip
     
     - name: Check slt version and output slt path
