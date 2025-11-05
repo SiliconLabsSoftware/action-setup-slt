@@ -20,6 +20,10 @@ inputs:
     type: boolean
     required: false
     default: false
+  slt-artifactory-url:
+    description: Custom SLT artifactory URL (defaults to https://www.silabs.com/documents/public/software/slt-cli-1.0.0-linux-x64.zip if not provided)
+    type: string
+    required: false
 
 outputs:
   slt-version:
@@ -61,7 +65,7 @@ runs:
         echo "SLT_CI=true" >> $GITHUB_ENV
       shell: bash
       env:
-        SLT_ARTIFACTORY_URL: ${{ inputs.use-unstable == 'true' && 'https://artifactory-local.silabs.net/artifactory/studio-generic-development/v6/update-sites/unstable/tools/slt/' || 'https://artifactory-local.silabs.net/artifactory/studio-generic-development/v6/update-sites/daily/tools/slt' }}
+        SLT_ARTIFACTORY_URL: ${{ inputs.slt-artifactory-url || 'https://www.silabs.com/documents/public/software/slt-cli-1.0.0-linux-x64.zip' }}
         SLT_PKG_NAME: slt-cli_linux_amd64.zip
     
     - name: Check slt version and output slt path
