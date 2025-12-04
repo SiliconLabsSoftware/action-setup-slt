@@ -21,7 +21,7 @@ inputs:
     required: false
     default: false
   slt-artifactory-url:
-    description: Custom SLT artifactory URL (defaults to https://www.silabs.com/documents/public/software/slt-cli-1.0.0-linux-x64.zip if not provided)
+    description: Custom SLT artifactory URL (defaults to https://www.silabs.com/documents/public/software/slt-cli-1.0.1-linux-x64.zip if not provided)
     type: string
     required: false
 
