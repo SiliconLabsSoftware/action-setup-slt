@@ -67,7 +67,7 @@ runs:
       shell: bash
       env:
         SLT_ARTIFACTORY_URL: ${{ inputs.slt-artifactory-url || 'https://www.silabs.com/documents/public/software' }}
-        SLT_PKG_NAME: slt-cli-1.0.0-linux-x64.zip
+        SLT_PKG_NAME: slt-cli-1.0.1-linux-x64.zip
     
     - name: Check slt version and output slt path
       id: check-slt
