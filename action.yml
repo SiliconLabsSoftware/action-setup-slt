@@ -20,6 +20,11 @@ inputs:
     type: boolean
     required: false
     default: false
+  remove-default-remote:
+    description: Removes default remotes from conan
+    type: boolean
+    required: false
+    default: false
 
 outputs:
   slt-version:
@@ -101,3 +106,10 @@ runs:
         echo "conan-path=$(which conan)" >> $GITHUB_OUTPUT
         echo "CONAN_HOME=$HOME/.silabs/slt/installs/conan" >> $GITHUB_ENV
       shell: bash
+    
+    - name: Remove default remote
+      if: ${{inputs.remove-default-remote}}
+      id: remove-default-remote
+      run: |
+        conan remote remove public-conan-silabs-net
+        conan remote list

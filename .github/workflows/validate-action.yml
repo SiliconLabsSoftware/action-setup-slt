@@ -17,6 +17,8 @@ jobs:
       fail-fast: false # otherwise a failing job cancels all other jobs.
       matrix:
         region: ['austin', 'budapest', 'hyderabad', 'montreal']
+        remove: [false, true]
+
     name: Validate Action (${{ matrix.region }})
     runs-on: [self-hosted, linux, x64, "${{ matrix.region }}" ]
     steps:
@@ -33,7 +35,9 @@ jobs:
 
       - name: Test Local Action
         id: test-action
-        uses: ./          
+        uses: ./       
+        with:
+          remove-default-remote: ${{ matrix.remove }}   
 
       - name: Check outputs
         id: check-outputs
