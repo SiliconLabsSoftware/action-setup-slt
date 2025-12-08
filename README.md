@@ -11,10 +11,11 @@ This GitHub Action downloads and install SLT, conan_engine and conan
 
 ## Inputs
 
-| Input           | Description                                                            | Required            |
-| --------------- | ---------------------------------------------------------------------- | ------------------- |
-| `install-conan` | Install conan alongside slt                                            | No (default: true)  |
-| `use-unstable`  | If true, download SLT from the unstable channel instead of daily build | No (default: false) |
+| Input                   | Description                                                            | Required            |
+| ----------------------- | ---------------------------------------------------------------------- | ------------------- |
+| `install-conan`         | Install conan alongside slt                                            | No (default: true)  |
+| `use-unstable`          | If true, download SLT from the unstable channel instead of daily build | No (default: false) |
+| `remove-default-remote` | If true, removes the default remote in conan                           | No (default: false) |
 
 ## Outputs
 
@@ -39,6 +40,7 @@ steps:
     with:
       install-conan: true          # optional (default true)
       use-unstable: false          # default, can be omitted
+      remove-default-remote: false # default, can be omitted
 
   - name: Setup SLT (unstable channel)
     id: slt-unstable
@@ -62,8 +64,8 @@ steps:
 
 The action selects between two SLT artifact channels:
 
-* Daily (default): `studio-generic-development/v6/update-sites/daily/tools/slt`
-* Unstable (experimental): `studio-generic-development/v6/update-sites/unstable/tools/slt`
+- Daily (default): `studio-generic-development/v6/update-sites/daily/tools/slt`
+- Unstable (experimental): `studio-generic-development/v6/update-sites/unstable/tools/slt`
 
 Set `use-unstable: true` to target the unstable channel when you need the very latest changes that have not yet stabilized. Leave it `false` (or omit) for routine CI.
 
