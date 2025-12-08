@@ -113,3 +113,4 @@ runs:
       run: |
         conan remote remove public-conan-silabs-net
         conan remote list
+      shell: bash
