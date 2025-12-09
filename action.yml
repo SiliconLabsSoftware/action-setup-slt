@@ -108,7 +108,7 @@ runs:
       shell: bash
     
     - name: Remove default remote
-      if: ${{inputs.remove-default-remote}}
+      if: ${{ fromJSON(inputs.remove-default-remote) }}
       id: remove-default-remote
       run: |
         conan remote remove public-conan-silabs-net

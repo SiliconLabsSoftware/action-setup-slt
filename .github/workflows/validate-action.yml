@@ -19,7 +19,7 @@ jobs:
         region: ['austin', 'budapest', 'hyderabad', 'montreal']
         remove: [false, true]
 
-    name: Validate Action (${{ matrix.region }})
+    name: Validate Action (${{ matrix.region }}) and remove default remote ${{ matrix.remove }}
     runs-on: [self-hosted, linux, x64, "${{ matrix.region }}" ]
     steps:
       - name: Checkout
