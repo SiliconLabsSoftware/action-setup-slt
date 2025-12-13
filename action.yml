@@ -80,7 +80,7 @@ runs:
       if: ${{ inputs.install-conan }}
       id: install-conan
       run: |
-        slt install foo --engine conan || true
+        slt install conan
         
         # Define paths as variables
         CONAN_ENGINE_PATH="$HOME/.silabs/slt/engines/conan/conan_engine"
