@@ -7,6 +7,19 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      install-conan:
+        description: Install conan
+        type: boolean
+        required: false
+        default: true
+      use-unstable:
+        description: Use unstable SLT remote
+        type: boolean
+        required: false
+        default: false
+      # remove-default-remote is already tested by the validate job (matrix.remove).
 
 permissions:
   contents: read
@@ -37,6 +50,8 @@ jobs:
         id: test-action
         uses: ./       
         with:
+          install-conan: ${{ inputs.install-conan || true }}
+          use-unstable: ${{ inputs.use-unstable || false }}
           remove-default-remote: ${{ matrix.remove }}   
 
       - name: Check outputs
