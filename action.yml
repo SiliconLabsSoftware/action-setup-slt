@@ -93,7 +93,7 @@ runs:
           echo "Error: conan_engine not found at $CONAN_ENGINE_PATH"
           exit 1
         fi
-        echo "conan-engine-version=$(conan_engine --version)" >> $GITHUB_OUTPUT
+        echo "conan-engine-version=$(conan_engine --version | head -n 1)" >> $GITHUB_OUTPUT
         echo "conan-engine-path=$(which conan_engine)" >> $GITHUB_OUTPUT
         
         if [ -f "$CONAN_PATH" ]; then
@@ -102,7 +102,7 @@ runs:
           echo "Error: conan not found at $CONAN_PATH"
           exit 1
         fi
-        echo "conan-version=$(conan --version)" >> $GITHUB_OUTPUT
+        echo "conan-version=$(conan --version | head -n 1)" >> $GITHUB_OUTPUT
         echo "conan-path=$(which conan)" >> $GITHUB_OUTPUT
         echo "CONAN_HOME=$HOME/.silabs/slt/installs/conan" >> $GITHUB_ENV
       shell: bash
