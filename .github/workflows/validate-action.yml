@@ -48,11 +48,11 @@ jobs:
 
       - name: Test Local Action
         id: test-action
-        uses: ./       
+        uses: ./
         with:
           install-conan: ${{ inputs.install-conan || true }}
           use-unstable: ${{ inputs.use-unstable || false }}
-          remove-default-remote: ${{ matrix.remove }}   
+          remove-default-remote: ${{ matrix.remove }}
 
       - name: Check outputs
         id: check-outputs
@@ -63,3 +63,25 @@ jobs:
           echo "conan_engine executable path: ${{ steps.test-action.outputs.conan-engine-path }}"
           echo "conan version installed: ${{ steps.test-action.outputs.conan-version }}"
           echo "conan executable path: ${{ steps.test-action.outputs.conan-path }}"
+
+  # Needed for persisting nodes
+  reinstall-on-node:
+    runs-on: [self-hosted, linux, x64, austin ]
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Test Local Action
+        uses: ./
+        with:
+          install-conan: ${{ inputs.install-conan || true }}
+          use-unstable: ${{ inputs.use-unstable || false }}
+
+      - name: Test Local Action
+        uses: ./
+        with:
+          install-conan: ${{ inputs.install-conan || true }}
+          use-unstable: ${{ inputs.use-unstable || false }}
