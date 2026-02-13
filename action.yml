@@ -88,7 +88,7 @@ runs:
         INSTALL_PATH="$HOME/.local/bin"
         
         if [ -f "$CONAN_ENGINE_PATH" ]; then
-          ln -s "$CONAN_ENGINE_PATH" "$INSTALL_PATH/conan_engine"
+          ln -fs "$CONAN_ENGINE_PATH" "$INSTALL_PATH/conan_engine"
         else
           echo "Error: conan_engine not found at $CONAN_ENGINE_PATH"
           exit 1
@@ -97,7 +97,7 @@ runs:
         echo "conan-engine-path=$(which conan_engine)" >> $GITHUB_OUTPUT
         
         if [ -f "$CONAN_PATH" ]; then
-          ln -s "$CONAN_PATH" "$INSTALL_PATH/conan"
+          ln -fs "$CONAN_PATH" "$INSTALL_PATH/conan"
         else
           echo "Error: conan not found at $CONAN_PATH"
           exit 1
