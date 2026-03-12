@@ -66,7 +66,7 @@ runs:
         echo "SLT_CI=true" >> $GITHUB_ENV
       shell: bash
       env:
-        SLT_ARTIFACTORY_URL: ${{ inputs.use-unstable == 'true' && 'https://artifactory-local.silabs.net/artifactory/studio-generic-development/v6/update-sites/unstable/tools/slt/' || 'https://artifactory-local.silabs.net/artifactory/studio-generic-development/v6/update-sites/daily/tools/slt' }}
+        SLT_ARTIFACTORY_URL: ${{ inputs.use-unstable == 'true' && 'https://artifactory-local.silabs.net/artifactory/studio-generic-development/v6/update-sites/unstable/tools/slt/' || 'https://artifactory-local.silabs.net/artifactory/studio-generic-development/slt/production/rel/1.1.1-61/' }}
         SLT_PKG_NAME: slt-cli_linux_amd64.zip
 
     - name: Check slt version and output slt path
