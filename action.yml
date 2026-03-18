@@ -59,6 +59,7 @@ runs:
       id: download-slt
       run: |
         curl ${SLT_ARTIFACTORY_URL}/${SLT_PKG_NAME} --output /tmp/${SLT_PKG_NAME}
+        jq -e . /tmp/${SLT_PKG_NAME} >/dev/null 2>&1 && cat /tmp/${SLT_PKG_NAME}
         mkdir -p $HOME/.local/bin
         unzip -o /tmp/${SLT_PKG_NAME} -d $HOME/.local/bin
         rm /tmp/${SLT_PKG_NAME}
